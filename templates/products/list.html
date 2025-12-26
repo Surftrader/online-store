@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3">
+        <h3>Категорії</h3>
+        <div class="list-group">
+            <a href="{% url 'products:product_list' %}" class="list-group-item list-group-item-action {% if not current_category %}active{% endif %}">
+                Всі товари
+            </a>
+            {% for cat in categories %}
+                <a href="?category={{ cat.slug }}" class="list-group-item list-group-item-action {% if current_category == cat.slug %}active{% endif %}">
+                    {{ cat.name }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.title }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.title }}</h5>
+                            <p class="card-text text-muted">{{ product.price }} грн.</p>
+                            <a href="#" class="btn btn-primary w-100">Детальніше</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p class="alert alert-warning">Товарів не знайдено.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

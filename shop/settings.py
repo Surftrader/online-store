@@ -130,3 +130,7 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# Redirect after login/logout 
+LOGIN_REDIRECT_URL = 'products:product_list'
+LOGOUT_REDIRECT_URL = 'products:product_list'

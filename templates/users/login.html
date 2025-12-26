@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Вхід{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white text-center">
+                <h4 class="mb-0">Вхід у магазин</h4>
+            </div>
+            <div class="card-body">
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Логін</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Пароль</label>
+                        {{ form.password }}
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Увійти</button>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <p class="mb-0">Немає акаунту? <a href="{% url 'users:register' %}">Реєстрація</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    input { 
+        display: block; 
+        width: 100%; 
+        padding: .375rem .75rem; 
+        font-size: 1rem; 
+        border: 1px solid #ced4da; 
+        border-radius: .375rem; }
+</style>
+{% endblock %}

@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .models import Product, Category
+from django.shortcuts import render, get_object_or_404
+from .models import Product, Category, ViewedProduct
 from django.db.models import Q
 
 def product_list(request):
@@ -26,3 +26,19 @@ def product_list(request):
         'categories': categories,
         'current_category': category_slug
     })
+
+def product_detail(request, slug):
+    # Get product by slug or return error 404
+    product = get_object_or_404(Product, slug=slug, available=True)
+    
+    # Logics reviews:
+    # If user is authenticated product will be saved to history
+    if request.user.is_authenticated:
+        # get_or_create prevents duplicates if the user refreshes the page
+        ViewedProduct.objects.get_or_create(user=request.user, product=product)
+
+    return render(request, 'products/detail.html', {
+        'product': product
+    })
+    
+    

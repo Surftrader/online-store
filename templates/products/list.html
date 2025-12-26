@@ -27,7 +27,7 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ product.title }}</h5>
                             <p class="card-text text-muted">{{ product.price }} грн.</p>
-                            <a href="#" class="btn btn-primary w-100">Детальніше</a>
+                            <a href="{% url 'products:product_detail' product.slug %}" class="btn btn-primary w-100">Детальніше</a>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ product.title }}{% endblock %}
+
+{% block content %}
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}">Головна</a></li>
+    <li class="breadcrumb-item active">{{ product.category.name }}</li>
+  </ol>
+</nav>
+
+<div class="row mt-4">
+    <div class="col-md-6">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="img-fluid rounded shadow" alt="{{ product.title }}">
+        {% else %}
+            <div class="bg-light d-flex align-items-center justify-content-center" style="height: 400px;">
+                <span>Немає фото</span>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-6">
+        <h1 class="display-5 font-weight-bold">{{ product.title }}</h1>
+        <p class="text-muted">Категорія: {{ product.category.name }}</p>
+        <hr>
+        <h3 class="text-success mb-4">{{ product.price }} грн.</h3>
+        
+        <div class="mb-4">
+            <h5>Опис товару:</h5>
+            <p>{{ product.description|linebreaks }}</p>
+        </div>
+
+        <button class="btn btn-primary btn-lg w-100 mb-3">Додати у кошик</button>
+        
+        {% if not user.is_authenticated %}
+            <div class="alert alert-info small">
+                Увійдіть, щоб залишити відгук про цей товар.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Відгуки покупців</h3>
+        <p class="text-muted">Тут будуть відгуки...</p>
+    </div>
+</div>
+{% endblock %}

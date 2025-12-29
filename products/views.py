@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category, ViewedProduct
+from reviews.forms import ReviewForm
 from django.db.models import Q
 
 def product_list(request):
@@ -40,5 +41,33 @@ def product_detail(request, slug):
     return render(request, 'products/detail.html', {
         'product': product
     })
+
+
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug, available=True)
     
+    # Processing the feedback form
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.product = product
+            review.user = request.user
+            review.save()
+            return redirect('products:product_detail', slug=product.slug)
+    else:
+        form = ReviewForm()
+
+    # Receive all reviews for this product
+    reviews = product.reviews.all()
+
+    # Logic of viewed products
+    if request.user.is_authenticated:
+        ViewedProduct.objects.get_or_create(user=request.user, product=product)
+
+    return render(request, 'products/detail.html', {
+        'product': product,
+        'reviews': reviews,
+        'review_form': form
+    })    
     

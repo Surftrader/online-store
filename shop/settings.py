@@ -134,3 +134,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # Redirect after login/logout 
 LOGIN_REDIRECT_URL = 'products:product_list'
 LOGOUT_REDIRECT_URL = 'products:product_list'
+
+LOGIN_URL = 'users:login'

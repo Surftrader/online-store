@@ -2,7 +2,19 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Product, Category, ViewedProduct
 from reviews.forms import ReviewForm
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
 
+
+@login_required
+def viewed_products_list(request):
+    # Get the current user's viewing history, sort by date (newest on top)
+    # We use select_related to make the SQL query efficient (JOIN with the product table)
+    viewed_items = ViewedProduct.objects.filter(user=request.user).select_related('product')
+    
+    return render(request, 'products/viewed_history.html', {
+        'viewed_items': viewed_items
+    })
+    
 def product_list(request):
     # Get parameters from URL (example, ?category=smartphones&search=iphone)
     category_slug = request.GET.get('category')

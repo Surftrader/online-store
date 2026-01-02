@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Історія переглядів{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Ви нещодавно переглядали</h2>
+    
+    <div class="row">
+        {% for item in viewed_items %}
+            <div class="col-md-3 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if item.product.image %}
+                        <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h6 class="card-title">{{ item.product.title }}</h6>
+                        <p class="text-muted small">Переглянуто: {{ item.viewed_at|date:"d.m.Y H:i" }}</p>
+                        <a href="{{ item.product.get_absolute_url }}" class="btn btn-sm btn-outline-primary">Переглянути знову</a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <p class="alert alert-info">Ви ще не переглянули жодного товару.</p>
+                <a href="{% url 'products:product_list' %}" class="btn btn-primary">Перейти до покупок</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -136,3 +136,10 @@ LOGIN_REDIRECT_URL = 'products:product_list'
 LOGOUT_REDIRECT_URL = 'products:product_list'
 
 LOGIN_URL = 'users:login'
+
+# Celery Configuration Options
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND')
+
+# For windows to avoid threading issues.
+# CELERY_WORKER_POOL_RESTART = True

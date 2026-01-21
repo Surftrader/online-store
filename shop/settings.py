@@ -87,6 +87,14 @@ DATABASES = {
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'HOST': os.getenv('DB_HOST'),
         'PORT': os.getenv('DB_PORT'),
+    },
+    'external_db': {
+        'ENGINE': os.getenv('EXTERNAL_ENGINE'),
+        'NAME': os.getenv('EXTERNAL_DB_NAME'),
+        'USER': os.getenv('EXTERNAL_DB_USER'),
+        'PASSWORD': os.getenv('EXTERNAL_DB_PASSWORD'),
+        'HOST': os.getenv('EXTERNAL_DB_HOST'),
+        'PORT': os.getenv('EXTERNAL_DB_PORT'),
     }
 }
 

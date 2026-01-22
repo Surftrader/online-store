@@ -27,11 +27,6 @@ class Command(BaseCommand):
             if not data:
                 self.stdout.write(self.style.WARNING('Дані для імпорту не знайдені у файлі.'))
                 return
-
-            # category, _ = Category.objects.get_or_create(
-            #     name='Імпортовані товари',
-            #     slug='imported-products'
-            # )
             
             success_count = 0
             
